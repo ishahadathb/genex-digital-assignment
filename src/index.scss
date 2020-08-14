@@ -14,13 +14,28 @@ code {
 .grid {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(300px, auto));
   grid-gap: 10px;
-  grid-auto-rows: minmax(400px, auto);
+  grid-template-rows: minmax(200px, auto);
+  grid-auto-rows: minmax(200px, auto);
   div {
     border: 1px solid #cdcdcd;
   }
 }
 .screen {
   background-color: #bada55;
+}
+
+.settingPanel {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  .formElm {
+    margin-left: 10px;
+    display: inline-block;
+    span,
+    input {
+      display: block;
+    }
+  }
 }

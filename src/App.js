@@ -1,21 +1,22 @@
 /* eslint-disable eqeqeq */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
+import Camera from "./components/camera";
+import useCamera from "./hooks/useCamera";
 
 function App() {
-  const [cameras, setCameras] = useState([{ id: 1, order: 0, foo: "br" }]);
+  const [cameras, setCameras] = useState([{ id: 1, order: 0 }]);
   const [itemPerRow, setItemPerRow] = useState(4);
+  const [stream] = useCamera();
   const [curentDropableElm, setCurentDropableElm] = useState();
   const [currentDraggedEl, setCurrentDruggedEl] = useState({
     el: null,
-    coord: null,
     id: undefined,
   });
 
   const addNew = (e) => {
     e.preventDefault();
     setCameras((prevState) => {
-      console.log(prevState);
       return [
         ...prevState,
         {
@@ -43,49 +44,73 @@ function App() {
      * 1. Eiither draggedItemIndex > replacementItemOrder
      * 2. Or draggedItemIndex < replacementItemOrder
      * On former, the order should be decremental up to draggedItemIndex
-     * On later, ther order would be incremental from replaceMentItemIndex up to n (count of item)
+     * On later, ther order would be incremental from replaceMentItemIndex up to draggedItemIndex
      */
-    const cam = [...cameras];
-    if (draggedItemOrder > replaceMentItemOrder) {
-      const sliced = cam
-        .slice(replaceMentItemOrder, draggedItemOrder)
-        .map((item) => {
-          item.order += 1;
-          return item;
-        });
 
-      console.log(sliced, cam);
+    if (draggedItemOrder > replaceMentItemOrder) {
+      const reOrdered = cameras.map((camera) => {
+        if (
+          camera.order >= replaceMentItemOrder &&
+          camera.order < draggedItemOrder
+        ) {
+          camera.order += 1;
+          return camera;
+        } else if (camera.order == draggedItemOrder) {
+          camera.order = replaceMentItemOrder;
+          return camera;
+        }
+
+        return camera;
+      });
+
+      console.log(reOrdered);
+    } else {
+      setCameras(
+        cameras.map((camera) => {
+          if (
+            camera.order <= replaceMentItemOrder &&
+            camera.order > draggedItemOrder
+          ) {
+            camera.order -= 1;
+            return camera;
+          } else if (camera.order == draggedItemOrder) {
+            camera.order = replaceMentItemOrder;
+            return camera;
+          }
+
+          return camera;
+        })
+      );
     }
   };
 
-  const handleDragStart = (e, id) => {
+  const handleDragStart = (e, order) => {
+    e.stopPropagation();
     const dragEl = e.target;
     e.dataTransfer.dropEffect = "move";
     // visual clue that this item is being dragged/moved
     e.target.style.opacity = "0.3";
 
-    const { height, width, top, left } = dragEl.getBoundingClientRect();
     setCurrentDruggedEl({
       el: dragEl,
-      coord: { topRight: left + width, bottomRight: top + height },
-      id,
+      order,
     });
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e, order) => {
+    e.preventDefault();
+    e.stopPropagation();
     const targetEl = e.target;
     e.dataTransfer.dropEffect = "move";
-
     // position of the target element in viewport
     const targetElPosition = targetEl.getBoundingClientRect();
-    const { el } = currentDraggedEl;
 
-    if (targetEl !== el) {
+    if (order !== currentDraggedEl.order) {
       if (
         e.clientX > targetElPosition.left ||
         e.clientY > targetElPosition.top
       ) {
-        setCurentDropableElm(targetEl);
+        setCurentDropableElm({ el: targetEl, order });
       }
     } else {
       setCurentDropableElm(currentDraggedEl);
@@ -94,18 +119,18 @@ function App() {
 
   const handleDragEnd = (e) => {
     // reset the opacity to 1 when an element has been dragged
-    e.preventDefault();
-    e.stopPropagation();
     e.target.style.opacity = 1;
 
-    if (curentDropableElm !== currentDraggedEl.el) {
+    console.log(curentDropableElm);
+    if (curentDropableElm.order !== currentDraggedEl.order) {
       reOrderItems(
-        currentDraggedEl.el.style.order,
-        curentDropableElm.style.order
+        parseInt(currentDraggedEl.order, 10),
+        parseInt(curentDropableElm.order, 10)
       );
     }
 
     setCurrentDruggedEl({});
+    setCurentDropableElm({});
   };
 
   return (
@@ -114,27 +139,26 @@ function App() {
         <button onClick={addNew} type="button">
           Add one
         </button>
-        <input
-          type="number"
-          value={itemPerRow}
-          onChange={handleItemPerRowChange}
-        />
+        {/* <label className="formElm" htmlFor="columnCount">
+          <span>Number of column per row</span>
+          <input
+            type="number"
+            value={itemPerRow}
+            id="columnCount"
+            onChange={handleItemPerRowChange}
+          />
+        </label> */}
       </div>
       <div className="grid">
-        {cameras.map(({ id, order }) => (
-          <div
-            draggable={true}
-            style={{ background: `hsla(${id * 50},100%,50%,0.3)`, order }}
-            onDragStart={(e) => handleDragStart(e, id)}
+        {cameras.map((cameraItem) => (
+          <Camera
+            onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
-          >
-            {id}
-            <br />
-            <span title="remove" onClick={() => removeItem(id)}>
-              X
-            </span>
-          </div>
+            item={cameraItem}
+            onRemove={removeItem}
+            stream={stream}
+          />
         ))}
       </div>
     </>
