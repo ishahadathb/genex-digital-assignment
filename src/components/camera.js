@@ -12,8 +12,22 @@ const Camera = (props) => {
   } = props;
 
   useEffect(() => {
-    vidRef.current.srcObject = stream;
+    if (vidRef.current) {
+      vidRef.current.srcObject = stream;
+    }
   }, [stream]);
+
+  const toggleFullScreen = async () => {
+    try {
+      if (vidRef.current.requestFullscreen && !document.fullscreenElement) {
+        vidRef.current.parentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    } catch (err) {
+      console.log(err.toString());
+    }
+  };
 
   return (
     <div
@@ -24,13 +38,20 @@ const Camera = (props) => {
       onDragOver={(e) => onDragOver(e, order)}
     >
       {id}
-      <video
-        ref={vidRef}
-        height="auto"
-        width="100%"
-        autoPlay
-        draggable={false}
-      />
+
+      <button type="button" onClick={toggleFullScreen}>
+        Toggle fullscreen
+      </button>
+      {stream && (
+        <video
+          ref={vidRef}
+          height="auto"
+          width="100%"
+          autoPlay
+          draggable={false}
+          controls={false}
+        />
+      )}
       <span title="remove" onClick={() => onRemove(id)}>
         X
       </span>

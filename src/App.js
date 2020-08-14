@@ -86,10 +86,10 @@ function App() {
 
   const handleDragStart = (e, order) => {
     e.stopPropagation();
-    const dragEl = e.target;
     e.dataTransfer.dropEffect = "move";
     // visual clue that this item is being dragged/moved
     e.target.style.opacity = "0.3";
+    const dragEl = e.target;
 
     setCurrentDruggedEl({
       el: dragEl,
@@ -100,15 +100,17 @@ function App() {
   const handleDragOver = (e, order) => {
     e.preventDefault();
     e.stopPropagation();
-    const targetEl = e.target;
     e.dataTransfer.dropEffect = "move";
+
     // position of the target element in viewport
+    const targetEl = e.target;
     const targetElPosition = targetEl.getBoundingClientRect();
 
     if (order !== currentDraggedEl.order) {
       if (
-        e.clientX > targetElPosition.left ||
-        e.clientY > targetElPosition.top
+        (e.clientX > targetElPosition.left ||
+          e.clientY > targetElPosition.top) &&
+        curentDropableElm.el !== targetEl
       ) {
         setCurentDropableElm({ el: targetEl, order });
       }
@@ -121,7 +123,6 @@ function App() {
     // reset the opacity to 1 when an element has been dragged
     e.target.style.opacity = 1;
 
-    console.log(curentDropableElm);
     if (curentDropableElm.order !== currentDraggedEl.order) {
       reOrderItems(
         parseInt(currentDraggedEl.order, 10),
