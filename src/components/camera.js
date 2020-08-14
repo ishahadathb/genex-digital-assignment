@@ -8,6 +8,7 @@ const Camera = (props) => {
     onDragOver,
     onRemove,
     stream,
+    dragOrder,
     item: { order, id },
   } = props;
 
@@ -29,8 +30,10 @@ const Camera = (props) => {
     }
   };
 
+  const isDropAbleItem = dragOrder === order;
   return (
     <div
+      className={`${isDropAbleItem && "dropAble"} cameraEl`}
       draggable={true}
       style={{ background: `hsla(${id * 50},100%,50%,0.3)`, order }}
       onDragStart={(e) => onDragStart(e, order)}
@@ -38,10 +41,15 @@ const Camera = (props) => {
       onDragOver={(e) => onDragOver(e, order)}
     >
       {id}
-
-      <button type="button" onClick={toggleFullScreen}>
-        Toggle fullscreen
-      </button>
+      <p>{isDropAbleItem ? "place here" : ""}</p>
+      <div className="panelOption">
+        <button type="button" onClick={toggleFullScreen}>
+          Toggle fullscreen
+        </button>
+        <span title="remove" onClick={() => onRemove(id)}>
+          X
+        </span>
+      </div>
       {stream && (
         <video
           ref={vidRef}
@@ -52,9 +60,6 @@ const Camera = (props) => {
           controls={false}
         />
       )}
-      <span title="remove" onClick={() => onRemove(id)}>
-        X
-      </span>
     </div>
   );
 };

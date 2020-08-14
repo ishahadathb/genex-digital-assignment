@@ -8,7 +8,10 @@ function App() {
   const [cameras, setCameras] = useState([{ id: 1, order: 0 }]);
   const [itemPerRow, setItemPerRow] = useState(4);
   const [stream] = useCamera();
-  const [curentDropableElm, setCurentDropableElm] = useState();
+  const [curentDropableElm, setCurentDropableElm] = useState({
+    el: null,
+    order: undefined,
+  });
   const [currentDraggedEl, setCurrentDruggedEl] = useState({
     el: null,
     id: undefined,
@@ -159,6 +162,7 @@ function App() {
             item={cameraItem}
             onRemove={removeItem}
             stream={stream}
+            dragOrder={curentDropableElm.order}
           />
         ))}
       </div>

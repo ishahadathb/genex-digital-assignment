@@ -18,8 +18,21 @@ code {
   grid-gap: 10px;
   grid-template-rows: minmax(200px, auto);
   grid-auto-rows: minmax(200px, auto);
-  div {
+  .cameraEl {
     border: 1px solid #cdcdcd;
+    position: relative;
+    .panelOption {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    &.dropAble {
+      background-color: transparent !important;
+      border: 2px dotted red;
+      video {
+        display: none;
+      }
+    }
   }
 }
 .screen {
