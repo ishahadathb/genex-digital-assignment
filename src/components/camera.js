@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import { ReactComponent as CloseIcon } from "../assets/close.svg";
+import { ReactComponent as FullScreenIcon } from "../assets/full-screen.svg";
+import { ReactComponent as VideoIcon } from "../assets/video.svg";
 
 const Camera = (props) => {
   const vidRef = useRef();
@@ -13,6 +16,7 @@ const Camera = (props) => {
   } = props;
 
   useEffect(() => {
+    //setup the source of video element after initial mount
     if (vidRef.current) {
       vidRef.current.srcObject = stream;
     }
@@ -31,6 +35,7 @@ const Camera = (props) => {
   };
 
   const isDropAbleItem = dragOrder === order;
+
   return (
     <div
       className={`${isDropAbleItem && "dropAble"} cameraEl`}
@@ -40,15 +45,33 @@ const Camera = (props) => {
       onDragEnd={onDragEnd}
       onDragOver={(e) => onDragOver(e, order)}
     >
-      {id}
-      <p>{isDropAbleItem ? "place here" : ""}</p>
+      {isDropAbleItem ? <p>place here</p> : ""}
       <div className="panelOption">
-        <button type="button" onClick={toggleFullScreen}>
-          Toggle fullscreen
-        </button>
-        <span title="remove" onClick={() => onRemove(id)}>
-          X
-        </span>
+        <div
+          className="cameraInfo"
+          style={{ background: `hsla(${id * 50},100%,50%,0.3)` }}
+        >
+          <VideoIcon className="icon" /> <span>Cam #{id}</span>
+        </div>
+
+        <div className="actionArea">
+          <div
+            className="fullScreen"
+            onClick={toggleFullScreen}
+            title="Full-screen camera"
+          >
+            <FullScreenIcon className="icon" />
+          </div>
+
+          <div
+            className="close"
+            onClick={() => onRemove(id)}
+            title="Remove camera"
+            alt="Close Icon"
+          >
+            <CloseIcon className="icon" />
+          </div>
+        </div>
       </div>
       {stream && (
         <video
@@ -64,4 +87,4 @@ const Camera = (props) => {
   );
 };
 
-export default React.memo(Camera);
+export default Camera;

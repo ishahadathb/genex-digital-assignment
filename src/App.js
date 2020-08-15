@@ -20,11 +20,13 @@ function App() {
   const addNew = (e) => {
     e.preventDefault();
     setCameras((prevState) => {
+      const lastItem = prevState[prevState.length - 1];
+
       return [
         ...prevState,
         {
-          id: prevState.length + 1,
-          order: prevState.length,
+          id: lastItem.id + 1,
+          order: lastItem.order + 1,
         },
       ];
     });
@@ -41,7 +43,6 @@ function App() {
 
   // after drag end reorder the item accordingly
   const reOrderItems = (draggedItemOrder, replaceMentItemOrder) => {
-    console.log(draggedItemOrder, replaceMentItemOrder);
     /**
      * On drag & replacment operation there is 2 scenario,
      * 1. Eiither draggedItemIndex > replacementItemOrder
@@ -51,22 +52,22 @@ function App() {
      */
 
     if (draggedItemOrder > replaceMentItemOrder) {
-      const reOrdered = cameras.map((camera) => {
-        if (
-          camera.order >= replaceMentItemOrder &&
-          camera.order < draggedItemOrder
-        ) {
-          camera.order += 1;
-          return camera;
-        } else if (camera.order == draggedItemOrder) {
-          camera.order = replaceMentItemOrder;
-          return camera;
-        }
+      setCameras(
+        cameras.map((camera) => {
+          if (
+            camera.order >= replaceMentItemOrder &&
+            camera.order < draggedItemOrder
+          ) {
+            camera.order += 1;
+            return camera;
+          } else if (camera.order == draggedItemOrder) {
+            camera.order = replaceMentItemOrder;
+            return camera;
+          }
 
-        return camera;
-      });
-
-      console.log(reOrdered);
+          return camera;
+        })
+      );
     } else {
       setCameras(
         cameras.map((camera) => {
@@ -87,6 +88,8 @@ function App() {
     }
   };
 
+  // this event fires when the drag starts, goo place for
+  // setting or any initialization
   const handleDragStart = (e, order) => {
     e.stopPropagation();
     e.dataTransfer.dropEffect = "move";
@@ -100,20 +103,23 @@ function App() {
     });
   };
 
+  // this handler is fired on active dragover (mouse-event) every few mili-seconds
   const handleDragOver = (e, order) => {
     e.preventDefault();
     e.stopPropagation();
     e.dataTransfer.dropEffect = "move";
+    const targetEl = e.target;
 
     // position of the target element in viewport
-    const targetEl = e.target;
     const targetElPosition = targetEl.getBoundingClientRect();
 
+    // check if the is draggedover another element (camera)
     if (order !== currentDraggedEl.order) {
+      // checks if the dragged element is over any element other that itself
       if (
         (e.clientX > targetElPosition.left ||
           e.clientY > targetElPosition.top) &&
-        curentDropableElm.el !== targetEl
+        curentDropableElm.el !== targetEl // prevent un-necessary re-render
       ) {
         setCurentDropableElm({ el: targetEl, order });
       }
@@ -126,6 +132,7 @@ function App() {
     // reset the opacity to 1 when an element has been dragged
     e.target.style.opacity = 1;
 
+    // if the current dropable target is not dragged item itself reorder
     if (curentDropableElm.order !== currentDraggedEl.order) {
       reOrderItems(
         parseInt(currentDraggedEl.order, 10),
@@ -133,6 +140,7 @@ function App() {
       );
     }
 
+    // reset state
     setCurrentDruggedEl({});
     setCurentDropableElm({});
   };
@@ -140,7 +148,7 @@ function App() {
   return (
     <>
       <div className="settingPanel">
-        <button onClick={addNew} type="button">
+        <button className="btn sm" onClick={addNew} type="button">
           Add one
         </button>
         {/* <label className="formElm" htmlFor="columnCount">

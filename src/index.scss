@@ -1,15 +1,34 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Inconsolata", monospace, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.btn {
+  border-radius: 4px;
+  border: 1px solid #ededed;
+  font-size: 16px;
+  background: #782b90;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background-color: darken(#782b90, 5);
+  }
+  &.sm {
+    line-height: 32px;
+    min-width: 40px;
+    padding: 0 20px;
+  }
 }
 .grid {
   display: grid;
@@ -24,13 +43,64 @@ code {
     .panelOption {
       position: absolute;
       right: 0;
+      width: 100%;
+      justify-content: space-between;
       top: 0;
+      display: flex;
+      z-index: 1;
+      justify-items: center;
     }
     &.dropAble {
       background-color: transparent !important;
       border: 2px dotted red;
       video {
         display: none;
+      }
+    }
+    .icon {
+      width: 20px;
+    }
+    .cameraInfo {
+      color: #fff;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      border-radius: 0px 4px 4px 0;
+      font-size: 18px;
+      .icon {
+        fill: #fff;
+        margin-right: 5px;
+      }
+    }
+    .actionArea {
+      display: flex;
+      align-items: center;
+      .close,
+      .fullScreen {
+        background-color: #fff;
+        padding: 3px;
+        transition: 0.2s;
+        cursor: pointer;
+        opacity: 0.5;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .fullScreen {
+        background: #fff;
+        margin-right: 3px;
+        &:hover {
+          .icon {
+            fill: #777447;
+          }
+        }
+      }
+      .close {
+        &:hover {
+          .icon {
+            fill: red;
+          }
+        }
       }
     }
   }
