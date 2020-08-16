@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/genex-digital-assignment/precache-manifest.a80e01ccd09ee310d9348b90433e6bd5.js"
+  "/genex-digital-assignment/precache-manifest.ab5ea3d481a4fc620cbec4574e55e2de.js"
 );
 
 self.addEventListener('message', (event) => {

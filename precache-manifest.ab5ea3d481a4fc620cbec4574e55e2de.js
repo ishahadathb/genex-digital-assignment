@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cf3bd1fb7eed0e3181fee7ec45b2c7d1",
+    "revision": "a65b5edeff784aa1d2b084f4f8e6ca11",
     "url": "/genex-digital-assignment/index.html"
   },
   {
-    "revision": "fe3dfc3df9dc83fe7142",
-    "url": "/genex-digital-assignment/static/css/main.229fe38c.chunk.css"
+    "revision": "5aa8d27f72e44d4d7d98",
+    "url": "/genex-digital-assignment/static/css/main.e6ad1316.chunk.css"
   },
   {
     "revision": "65111ff620409ea0f580",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/genex-digital-assignment/static/js/2.90ab7614.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fe3dfc3df9dc83fe7142",
-    "url": "/genex-digital-assignment/static/js/main.c7e45591.chunk.js"
+    "revision": "5aa8d27f72e44d4d7d98",
+    "url": "/genex-digital-assignment/static/js/main.339c2e65.chunk.js"
   },
   {
     "revision": "52b6140b1758fafbb23d",
