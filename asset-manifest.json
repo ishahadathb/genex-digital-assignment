@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/genex-digital-assignment/static/css/main.229fe38c.chunk.css",
+    "main.js": "/genex-digital-assignment/static/js/main.c7e45591.chunk.js",
+    "main.js.map": "/genex-digital-assignment/static/js/main.c7e45591.chunk.js.map",
+    "runtime-main.js": "/genex-digital-assignment/static/js/runtime-main.9d9284c7.js",
+    "runtime-main.js.map": "/genex-digital-assignment/static/js/runtime-main.9d9284c7.js.map",
+    "static/js/2.90ab7614.chunk.js": "/genex-digital-assignment/static/js/2.90ab7614.chunk.js",
+    "static/js/2.90ab7614.chunk.js.map": "/genex-digital-assignment/static/js/2.90ab7614.chunk.js.map",
+    "index.html": "/genex-digital-assignment/index.html",
+    "precache-manifest.a80e01ccd09ee310d9348b90433e6bd5.js": "/genex-digital-assignment/precache-manifest.a80e01ccd09ee310d9348b90433e6bd5.js",
+    "service-worker.js": "/genex-digital-assignment/service-worker.js",
+    "static/css/main.229fe38c.chunk.css.map": "/genex-digital-assignment/static/css/main.229fe38c.chunk.css.map",
+    "static/js/2.90ab7614.chunk.js.LICENSE.txt": "/genex-digital-assignment/static/js/2.90ab7614.chunk.js.LICENSE.txt",
+    "static/media/close.e114141d.svg": "/genex-digital-assignment/static/media/close.e114141d.svg",
+    "static/media/full-screen.867261b6.svg": "/genex-digital-assignment/static/media/full-screen.867261b6.svg",
+    "static/media/video.7a0e54ad.svg": "/genex-digital-assignment/static/media/video.7a0e54ad.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9d9284c7.js",
+    "static/js/2.90ab7614.chunk.js",
+    "static/css/main.229fe38c.chunk.css",
+    "static/js/main.c7e45591.chunk.js"
+  ]
+}
