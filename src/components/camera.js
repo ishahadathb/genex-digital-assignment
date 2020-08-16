@@ -40,12 +40,13 @@ const Camera = (props) => {
     <div
       className={`${isDropAbleItem && "dropAble"} cameraEl`}
       draggable={true}
+      onDoubleClick={toggleFullScreen}
       style={{ background: `hsla(${id * 50},100%,50%,0.3)`, order }}
       onDragStart={(e) => onDragStart(e, order)}
       onDragEnd={onDragEnd}
       onDragOver={(e) => onDragOver(e, order)}
     >
-      {isDropAbleItem ? <p>place here</p> : ""}
+      {isDropAbleItem ? <p className="messgae">place here</p> : ""}
       <div className="panelOption">
         <div
           className="cameraInfo"

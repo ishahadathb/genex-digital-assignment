@@ -40,6 +40,7 @@ code {
   .cameraEl {
     border: 1px solid #cdcdcd;
     position: relative;
+    cursor: move;
     .panelOption {
       position: absolute;
       right: 0;
@@ -52,9 +53,16 @@ code {
     }
     &.dropAble {
       background-color: transparent !important;
-      border: 2px dotted red;
-      video {
+      border: 2px dashed #77c399;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      video,
+      .panelOption {
         display: none;
+      }
+      .messgae {
+        font-size: 18px;
       }
     }
     .icon {
