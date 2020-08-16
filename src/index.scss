@@ -35,10 +35,8 @@ code {
   min-height: 100vh;
   grid-template-columns: repeat(auto-fit, minmax(300px, auto));
   grid-gap: 10px;
-  grid-template-rows: minmax(200px, auto);
-  grid-auto-rows: minmax(200px, auto);
+  grid-auto-rows: minmax(200px, max-content);
   .cameraEl {
-    border: 1px solid #cdcdcd;
     position: relative;
     cursor: move;
     .panelOption {

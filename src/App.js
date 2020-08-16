@@ -33,7 +33,9 @@ function App() {
   };
 
   const removeItem = (id) => {
-    setCameras(cameras.filter((camera) => camera.id !== id));
+    if (cameras.length > 1) {
+      setCameras(cameras.filter((camera) => camera.id !== id));
+    }
   };
 
   const handleItemPerRowChange = (e) => {

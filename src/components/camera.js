@@ -35,23 +35,20 @@ const Camera = (props) => {
   };
 
   const isDropAbleItem = dragOrder === order;
-
+  const bgColor = `hsla(${id * 50},100%,50%,0.7)`;
   return (
     <div
       className={`${isDropAbleItem && "dropAble"} cameraEl`}
       draggable={true}
       onDoubleClick={toggleFullScreen}
-      style={{ background: `hsla(${id * 50},100%,50%,0.3)`, order }}
+      style={{ background: !stream ? bgColor : "transparent", order }}
       onDragStart={(e) => onDragStart(e, order)}
       onDragEnd={onDragEnd}
       onDragOver={(e) => onDragOver(e, order)}
     >
       {isDropAbleItem ? <p className="messgae">place here</p> : ""}
       <div className="panelOption">
-        <div
-          className="cameraInfo"
-          style={{ background: `hsla(${id * 50},100%,50%,0.3)` }}
-        >
+        <div className="cameraInfo" style={{ background: bgColor }}>
           <VideoIcon className="icon" /> <span>Cam #{id}</span>
         </div>
 
